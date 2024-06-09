@@ -10,11 +10,14 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Chemin vers le fichier de la base de données
+const DB_PATH = path.join(__dirname, 'questions.db');
+
 // Configurer la base de données SQLite
-const db = new sqlite3.Database(':memory:');
+const db = new sqlite3.Database(DB_PATH);
 
 db.serialize(() => {
-    db.run("CREATE TABLE questions (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT)");
+    db.run("CREATE TABLE IF NOT EXISTS questions (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT)");
 });
 
 // Route pour soumettre une question
@@ -41,6 +44,17 @@ app.get('/admin', (req, res) => {
 // Route pour la page d'administration
 app.get('/admin.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+// Route pour supprimer une question
+app.delete('/delete/:id', (req, res) => {
+    const questionId = req.params.id;
+    db.run("DELETE FROM questions WHERE id = ?", [questionId], function(err) {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'Une erreur est survenue.' });
+        }
+        res.json({ success: true });
+    });
 });
 
 // Lancer le serveur

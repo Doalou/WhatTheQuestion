@@ -1,23 +1,26 @@
 document.getElementById('questionForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    const question = document.getElementById('question').value;
-    
+    const question = document.getElementById('questionInput').value;
+    const messageDiv = document.getElementById('message');
+
     fetch('/ask', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ question })
+        body: JSON.stringify({ question: question })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Question envoyée avec succès !');
-            document.getElementById('question').value = '';
+            document.getElementById('questionInput').value = '';
+            messageDiv.innerHTML = '<div class="alert alert-success">Question envoyée avec succès</div>';
         } else {
-            alert('Une erreur est survenue.');
+            messageDiv.innerHTML = '<div class="alert alert-error">Une erreur est survenue</div>';
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Erreur:', error);
+        messageDiv.innerHTML = '<div class="alert alert-error">Une erreur est survenue</div>';
+    });
 });
