@@ -28,7 +28,7 @@ app.post('/ask', (req, res) => {
     });
 });
 
-// Route pour visualiser les questions (page admin)
+// Route pour visualiser les questions (API)
 app.get('/admin', (req, res) => {
     db.all("SELECT * FROM questions", [], (err, rows) => {
         if (err) {
@@ -36,6 +36,11 @@ app.get('/admin', (req, res) => {
         }
         res.json(rows);
     });
+});
+
+// Route pour la page d'administration
+app.get('/admin.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
 // Lancer le serveur
