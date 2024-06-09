@@ -14,13 +14,13 @@ document.getElementById('questionForm').addEventListener('submit', function(e) {
     .then(data => {
         if (data.success) {
             document.getElementById('questionInput').value = '';
-            messageDiv.innerHTML = '<div class="alert alert-success">Question envoyée avec succès</div>';
+            messageDiv.innerHTML = '<div class="alert alert-success">Question send !</div>';
         } else {
-            messageDiv.innerHTML = '<div class="alert alert-error">Une erreur est survenue</div>';
+            messageDiv.innerHTML = '<div class="alert alert-error">Uh-Oh... Something went wrong >w<</div>';
         }
     })
     .catch(error => {
         console.error('Erreur:', error);
-        messageDiv.innerHTML = '<div class="alert alert-error">Une erreur est survenue</div>';
+        messageDiv.innerHTML = '<div class="alert alert-error">Uh-Oh... Something went wrong >w<</div>';
     });
 });

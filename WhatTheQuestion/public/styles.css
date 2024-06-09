@@ -11,18 +11,33 @@
 /* Style de base */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background: linear-gradient(270deg, #ff6ec4, #7873f5, #37ecba);
+    background-size: 600% 600%;
+    animation: gradientAnimation 16s ease infinite;
+    color: var(--text-color);
+}
+
+/* Animation du fond */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Conteneur principal */
 .container {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent pour le contraste */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
